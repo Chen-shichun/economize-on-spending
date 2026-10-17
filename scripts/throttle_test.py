@@ -152,6 +152,11 @@ SKILL_MD = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file_
 def run_tests():
     cases = [
         {
+            "name": "英文技术与不确定性保留",
+            "text": "This fix may reduce latency, but it should be validated in staging. Keep npm install, v1.2.3, 2026-10-17, and --force unchanged.",
+            "must_keep": ["may", "should", "npm install", "v1.2.3", "2026-10-17", "--force"],
+        },
+        {
             "name": "置信度词保留",
             "text": "这个修复可能降低延迟，应该先在 staging 验证。",
             "must_keep": ["可能", "应该"],
