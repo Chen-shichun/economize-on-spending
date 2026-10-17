@@ -146,11 +146,18 @@ def conservative_compress(text):
     return "".join(final).lstrip(PUNCT)
 
 
-SKILL_MD = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "SKILL.md"))
+SKILL_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+SKILL_MD = os.path.join(SKILL_DIR, "SKILL.md")
+LANGUAGE_PACKS = [os.path.join(SKILL_DIR, "SKILL.zh-CN.md"), os.path.join(SKILL_DIR, "SKILL.en.md")]
 
 
 def run_tests():
     cases = [
+        {
+            "name": "英文技术与不确定性保留",
+            "text": "This fix may reduce latency, but it should be validated in staging. Keep npm install, v1.2.3, 2026-10-17, and --force unchanged.",
+            "must_keep": ["may", "should", "npm install", "v1.2.3", "2026-10-17", "--force"],
+        },
         {
             "name": "置信度词保留",
             "text": "这个修复可能降低延迟，应该先在 staging 验证。",
@@ -265,6 +272,8 @@ def run_tests():
         if c.get("skill_check"):
             out = ""
             txt = open(SKILL_MD, encoding="utf-8").read()
+            for pack in LANGUAGE_PACKS:
+                txt += "\n" + open(pack, encoding="utf-8").read()
             if txt.startswith("﻿"):
                 problems.append("SKILL.md 带 BOM，frontmatter 解析可能失败")
             if "\r\n" in txt:
