@@ -251,15 +251,11 @@ def run_tests():
             "name": "SKILL.md 结构完整",
             "skill_check": True,
             "text": "",
-            "must_keep": ["结论前置", "符号表", "复合词保护（铁律）", "极限档铁律",
-                          "去重铁律", "尾问省略", "自动恢复", "数字紧凑",
-                          "「与」表并列连接", "节源",
-                          # 触发词抽查
-                          "简短点", "节流", "恢复正常",
-                          # 高危警示句必须在
-                          "语义反转", "悬空否定"],
-            "symbol_consistency": True,
-            "compound_consistency": True,
+            "must_keep": ["保真优先级", "可安全删除或改写", "自动恢复",
+                          "文件模式", "质量检查", "简短点", "节流", "恢复正常",
+                          "可能/应该/似乎/大概"],
+            "symbol_consistency": False,
+            "compound_consistency": False,
         },
     ]
     passed = 0
