@@ -146,7 +146,9 @@ def conservative_compress(text):
     return "".join(final).lstrip(PUNCT)
 
 
-SKILL_MD = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "SKILL.md"))
+SKILL_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+SKILL_MD = os.path.join(SKILL_DIR, "SKILL.md")
+LANGUAGE_PACKS = [os.path.join(SKILL_DIR, "SKILL.zh-CN.md"), os.path.join(SKILL_DIR, "SKILL.en.md")]
 
 
 def run_tests():
@@ -270,6 +272,8 @@ def run_tests():
         if c.get("skill_check"):
             out = ""
             txt = open(SKILL_MD, encoding="utf-8").read()
+            for pack in LANGUAGE_PACKS:
+                txt += "\n" + open(pack, encoding="utf-8").read()
             if txt.startswith("﻿"):
                 problems.append("SKILL.md 带 BOM，frontmatter 解析可能失败")
             if "\r\n" in txt:
