@@ -1,8 +1,20 @@
 # 🪙 节流 (Economize on Spending) · Cross-Model Minimal-Communication Layer
 
-> ✨ Make **any LLM / AI agent** reply in minimal Chinese — cut 60–89% of output tokens with **zero loss of technical information**.
+> ✨ Make LLM / AI agent replies concise in Chinese or English while preserving semantic boundaries and technical information.
 
-Economize on Spending is a **model-agnostic** compression skill. It strips redundant Chinese phrasing and raises information density, so replies stay short, accurate, and human-readable.
+Economize on Spending is a model-agnostic compression skill. Load only the language pack you need to reduce prompt and retrieval cost.
+
+## 🌐 Language packs and token-efficient loading
+
+The root SKILL.md is a small selector. Load exactly one pack when possible:
+
+| Need | Load |
+|---|---|
+| Chinese replies | SKILL.zh-CN.md |
+| English replies | SKILL.en.md |
+| Mixed Chinese + English | both files |
+
+The English pack preserves uncertainty words (may, might, should), conditions, scope, code, commands, identifiers, numbers, and safety warnings. The Chinese pack applies the equivalent Chinese rules. This split avoids pulling unused language instructions into the prompt.
 
 ---
 
