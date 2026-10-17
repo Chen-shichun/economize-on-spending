@@ -1,20 +1,22 @@
 # -*- coding: utf-8 -*-
-"""A/B 实测：同题三版回复的真实 token 数（Qwen2.5 BPE 离线 tokenizer，中文代表性好）。"""
+"""A/B 实测：使用用户指定的本地 tokenizer 比较 token 数；结果仅代表该 tokenizer。"""
+import argparse
 import os
 import sys
 
 from tokenizers import Tokenizer
 
-TOK_PATH = r"C:\tools\tmp-tok\qwen_tok.json"
-if not os.path.exists(TOK_PATH):
-    print(f"[错误] 缺少 tokenizer 词表: {TOK_PATH}")
-    print("获取方式（bash）:")
-    print('  mkdir -p /c/tools/tmp-tok && curl -sL \\')
-    print('    "https://hf-mirror.com/Qwen/Qwen2.5-0.5B/resolve/main/tokenizer.json" \\')
-    print("    > /c/tools/tmp-tok/qwen_tok.json")
-    sys.exit(2)
+def load_tokenizer(path):
+    if not os.path.isfile(path):
+        raise FileNotFoundError(f"tokenizer 不存在: {path}")
+    return Tokenizer.from_file(path)
 
-tok = Tokenizer.from_file(TOK_PATH)
+parser = argparse.ArgumentParser(description="Compare token counts with a local tokenizer.")
+parser.add_argument("--tokenizer", default=os.environ.get("TOKENIZER_PATH"), help="tokenizer.json 路径，也可用 TOKENIZER_PATH")
+args = parser.parse_args()
+if not args.tokenizer:
+    parser.error("请传 --tokenizer PATH 或设置 TOKENIZER_PATH；不上传文本到外部服务")
+tok = load_tokenizer(args.tokenizer)
 
 def n_tokens(t):
     return len(tok.encode(t).ids)
@@ -85,7 +87,6 @@ NEW_THROTTLE = """2026 主流 5 方向：
 
 rows = [("正常中文", NORMAL), ("旧节流(标准档)", OLD_THROTTLE), ("新节流(+结构规则)", NEW_THROTTLE)]
 base_n = n_tokens(NORMAL)
-base_c = len(NORMAL)
 print(f"{'版本':<20}{'字符':>7}{'token':>8}{'vs正常':>9}")
 for name, t in rows:
     n = n_tokens(t)
@@ -96,3 +97,5 @@ KEY_FACTS = ["量化", "MoE", "test-time compute", "RL", "57%", "水印", "agent
 missing = [k for k in KEY_FACTS if k not in NEW_THROTTLE]
 print()
 print("关键事实存活检查:", "全部保留 ✅" if not missing else f"丢失: {missing}")
+
+print("说明：未计入 system prompt/规则成本；跨模型账单需分别使用对应 tokenizer 复测。")
