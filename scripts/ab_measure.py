@@ -85,7 +85,10 @@ NEW_THROTTLE = """2026 主流 5 方向：
 新兴：多模态统一/具身/AI4Science。
 竞赛向：Agent+推理 或 效率量化（门槛低）。"""
 
-rows = [("正常中文", NORMAL), ("旧节流(标准档)", OLD_THROTTLE), ("新节流(+结构规则)", NEW_THROTTLE)]
+EN_NORMAL = """This fix may reduce latency, but it should be validated in staging before production. Keep the command npm install, version 1.2.3, date 2026-10-17, and the --force flag unchanged."""
+EN_THROTTLE = """May reduce latency → validate in staging first. Keep npm install, v1.2.3, 2026-10-17, --force unchanged."""
+
+rows = [("Normal English", EN_NORMAL), ("English throttle", EN_THROTTLE), ("正常中文", NORMAL), ("旧节流(标准档)", OLD_THROTTLE), ("新节流(+结构规则)", NEW_THROTTLE)]
 base_n = n_tokens(NORMAL)
 print(f"{'版本':<20}{'字符':>7}{'token':>8}{'vs正常':>9}")
 for name, t in rows:
@@ -94,8 +97,11 @@ for name, t in rows:
 
 # 语义保真 spot-check：关键事实必须存活
 KEY_FACTS = ["量化", "MoE", "test-time compute", "RL", "57%", "水印", "agent", "AI4Science", "竞赛"]
+EN_FACTS = ["may", "should", "npm install", "v1.2.3", "2026-10-17", "--force"]
 missing = [k for k in KEY_FACTS if k not in NEW_THROTTLE]
 print()
 print("关键事实存活检查:", "全部保留 ✅" if not missing else f"丢失: {missing}")
 
+en_missing = [k for k in EN_FACTS if k not in EN_THROTTLE]
+print("英文关键事实检查:", "全部保留 ✅" if not en_missing else f"丢失: {en_missing}")
 print("说明：未计入 system prompt/规则成本；跨模型账单需分别使用对应 tokenizer 复测。")
