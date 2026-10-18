@@ -20,7 +20,7 @@ The English pack preserves uncertainty words (may, might, should), conditions, s
 
 ## 🌱 Background
 
-This skill was born from token pain: while using "Blue Fat Fish" (a playful nickname for DeepSeek) on WorkBuddy, long-winded replies burned through tokens fast and it hurt to watch the usage climb. So I started building Economize on Spending. While working on it, I happened to see a Bilibili promo video about "原始人" (genshijin), an ultra-compression communication skill. Inspired by its "drop fluff, keep info" idea, I studied it and iterated into this Chinese-first, model-agnostic rule set — making any LLM / agent reply in minimal Chinese, cutting 60–89% of output tokens with **zero loss of technical information**. Every token saved is money and patience saved.
+This skill was born from token pain: while using "Blue Fat Fish" (a playful nickname for DeepSeek) on WorkBuddy, long-winded replies burned through tokens fast and it hurt to watch the usage climb. So I started building Economize on Spending. While working on it, I happened to see a Bilibili promo video about "原始人" (genshijin), an ultra-compression communication skill. Inspired by its "drop fluff, keep info" idea, this project evolved into language-specific, model-agnostic rules. Reported savings are benchmark results, not guarantees; semantic fidelity takes priority.
 
 ---
 
@@ -87,8 +87,8 @@ Temporarily revert to normal Chinese, then resume throttling, when:
 
 ```bash
 cd ~/.workbuddy/skills/economize-on-spending/scripts
-python throttle_test.py        # 17 deterministic cases; all-pass = healthy
-python ab_measure.py           # A/B token measurement (needs Qwen tokenizer)
+python throttle_test.py        # deterministic semantic-invariant cases; all-pass = healthy
+python ab_measure.py --tokenizer PATH\n# or: TOKENIZER_PATH=PATH python ab_measure.py
 ```
 
 ---
