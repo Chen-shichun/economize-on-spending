@@ -1,7 +1,6 @@
 ---
 name: economize-on-spending
 description: 'Language-selectable concise-response rules. Load SKILL.zh-CN.md for Chinese, SKILL.en.md for English, or both when bilingual output is needed.'
-agent_created: true
 ---
 
 # Economize on Spending

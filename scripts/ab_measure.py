@@ -2,11 +2,14 @@
 """A/B 实测：使用用户指定的本地 tokenizer 比较 token 数；结果仅代表该 tokenizer。"""
 import argparse
 import os
-import sys
-
-from tokenizers import Tokenizer
 
 def load_tokenizer(path):
+    try:
+        from tokenizers import Tokenizer
+    except ModuleNotFoundError:
+        raise SystemExit(
+            "缺少 tokenizers 依赖；请先运行: python -m pip install -r requirements.txt"
+        )
     if not os.path.isfile(path):
         raise FileNotFoundError(f"tokenizer 不存在: {path}")
     return Tokenizer.from_file(path)

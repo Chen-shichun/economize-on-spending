@@ -86,9 +86,10 @@ Temporarily revert to normal Chinese, then resume throttling, when:
 ## ✅ Local verification
 
 ```bash
-cd ~/.workbuddy/skills/economize-on-spending/scripts
-python throttle_test.py        # deterministic semantic-invariant cases; all-pass = healthy
-python ab_measure.py --tokenizer PATH\n# or: TOKENIZER_PATH=PATH python ab_measure.py
+cd ~/.workbuddy/skills/economize-on-spending
+python scripts/throttle_test.py
+python scripts/ab_measure.py --tokenizer PATH
+# or: TOKENIZER_PATH=PATH python scripts/ab_measure.py
 ```
 
 ---

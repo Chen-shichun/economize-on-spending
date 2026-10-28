@@ -1,7 +1,6 @@
 ---
 name: economize-on-spending
 description: '中文回复节流：在用户要求简洁时，结论前置、去冗余、保留语义边界与技术细节。默认标准档；遇安全、歧义或不可逆操作自动恢复正常表达。'
-agent_created: true
 ---
 
 # 节流（Economize on Spending）

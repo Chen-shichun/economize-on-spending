@@ -74,9 +74,10 @@
 ## ✅ 本地验证
 
 ```bash
-cd ~/.workbuddy/skills/economize-on-spending/scripts
-python throttle_test.py        # 17 项确定性用例，全过即健康
-python ab_measure.py           # A/B token 实测（需 Qwen tokenizer）
+cd ~/.workbuddy/skills/economize-on-spending
+python scripts/throttle_test.py        # 19 项确定性用例，全过即健康
+python scripts/ab_measure.py --tokenizer PATH
+# 或：TOKENIZER_PATH=PATH python scripts/ab_measure.py
 ```
 
 ---

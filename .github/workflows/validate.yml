@@ -1,0 +1,26 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compile scripts
+        run: python -m compileall -q scripts
+      - name: Run deterministic checks
+        run: python scripts/throttle_test.py
+      - name: Validate measurement CLI
+        run: python scripts/ab_measure.py --help

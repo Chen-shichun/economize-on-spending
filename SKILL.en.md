@@ -1,7 +1,6 @@
 ---
 name: economize-on-spending-en
 description: 'English concise-response mode: reduce redundancy while preserving facts, uncertainty, constraints, safety, technical tokens, and execution order.'
-agent_created: true
 ---
 
 # Economize on Spending — English
